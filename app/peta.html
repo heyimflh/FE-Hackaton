@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html class="dark" lang="id">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>SmartRoad AI - Smart Map View</title>
+    
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="assets/tailwind.config.js"></script>
+    <link href="assets/style.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <!-- Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        /* Dark map tiles filter */
+        .leaflet-tile-pane { filter: brightness(0.55) contrast(1.3) saturate(0.3) hue-rotate(180deg) invert(1); }
+        .leaflet-control-zoom { display: none !important; }
+        .leaflet-control-attribution { display: none !important; }
+        /* Custom marker pulse */
+        @keyframes marker-pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.8); opacity: 0; } }
+        .pulse-ring { animation: marker-pulse 2s ease-out infinite; }
+    </style>
+</head>
+<body class="font-body text-on-surface overflow-hidden">
+    <!-- TopAppBar -->
+    <header class="fixed top-0 w-full z-[1000] bg-[#0e1322]/60 backdrop-blur-3xl shadow-[0_4px_30px_rgba(0,0,0,0.5)] flex justify-between items-center px-6 py-4 border-b border-white/5">
+        <div class="flex items-center gap-3">
+            <div data-action="go-profile" class="w-10 h-10 rounded-full border-2 border-primary-container flex items-center justify-center bg-surface-container-high text-on-surface-variant cursor-pointer hover:bg-primary-container hover:text-[#0e1322] transition-colors">
+                <span class="material-symbols-outlined text-2xl">manage_accounts</span>
+            </div>
+            <span class="text-xl md:text-2xl font-bold tracking-tighter text-white font-headline">SmartRoad AI</span>
+        </div>
+        <button data-action="notifications" class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container-high text-primary-container hover:bg-[#00ff87]/10 hover:scale-105 transition-transform active:scale-95 duration-200">
+            <span class="material-symbols-outlined">notifications</span>
+        </button>
+    </header>
+
+    <!-- Main Map Canvas -->
+    <main class="relative h-screen w-full">
+        <!-- Leaflet Map Container -->
+        <div id="map" class="absolute inset-0 z-0"></div>
+
+        <!-- HUD Overlay -->
+        <div class="absolute top-24 left-6 flex flex-col gap-4 z-[500]">
+            <div class="bg-surface-container-high/60 backdrop-blur-xl p-4 rounded-xl border border-outline-variant/15 pointer-events-auto shadow-lg">
+                <p class="text-[10px] uppercase tracking-widest text-primary-container font-headline font-extrabold mb-2">Sistem Monitoring</p>
+                <div class="flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full bg-primary-container animate-pulse shadow-[0_0_8px_#00ff87]"></div>
+                    <span class="text-xs text-on-surface font-medium">Aktif: Kebumen Tengah</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating Controls -->
+        <div class="absolute top-24 right-6 flex flex-col gap-3 z-[500]">
+            <button id="btnZoomIn" class="w-12 h-12 rounded-full bg-surface-container-high/80 backdrop-blur-md flex items-center justify-center text-on-surface border border-white/5 shadow-lg hover:bg-primary-container hover:text-on-primary transition-all active:scale-90">
+                <span class="material-symbols-outlined">add</span>
+            </button>
+            <button id="btnZoomOut" class="w-12 h-12 rounded-full bg-surface-container-high/80 backdrop-blur-md flex items-center justify-center text-on-surface border border-white/5 shadow-lg hover:bg-primary-container hover:text-on-primary transition-all active:scale-90">
+                <span class="material-symbols-outlined">remove</span>
+            </button>
+            <div class="w-12 h-1 mb-2"></div>
+            <button id="btnMyLocation" class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center text-[#0e1322] shadow-[0_0_15px_rgba(0,255,135,0.4)] hover:scale-105 transition-transform active:scale-90">
+                <span class="material-symbols-outlined">my_location</span>
+            </button>
+        </div>
+
+        <!-- Bottom Sheet -->
+        <div id="bottomSheet" class="bottom-sheet bottom-sheet-hidden absolute bottom-[108px] left-1/2 w-[calc(100%-2rem)] max-w-md z-[600]">
+            <div class="bg-surface-container-high/80 backdrop-blur-3xl rounded-3xl shadow-[0_40px_80px_rgba(0,0,0,0.8)] border border-primary-container/20 overflow-hidden relative">
+                <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-error-container to-transparent opacity-70"></div>
+                <div class="p-6">
+                    <div class="flex items-start justify-between mb-4">
+                        <div>
+                            <span id="sheetBadge" class="inline-block px-3 py-1 rounded-full bg-error-container/20 text-error text-[10px] font-extrabold uppercase tracking-widest mb-2 border border-error/50">Level: Parah</span>
+                            <h2 id="sheetTitle" class="text-lg md:text-xl font-headline font-extrabold text-white tracking-tight">Jl. Pemuda, Kebumen</h2>
+                            <p id="sheetTime" class="text-slate-400 text-xs mt-1 font-medium flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">schedule</span> AI Dideteksi 2 jam yang lalu
+                            </p>
+                        </div>
+                        <button class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-colors" onclick="toggleBottomSheet('bottomSheet', false)">
+                            <span class="material-symbols-outlined text-[20px]">close</span>
+                        </button>
+                    </div>
+
+                    <div class="relative h-44 w-full rounded-2xl overflow-hidden mb-6 group border border-white/5">
+                        <img id="sheetImage" alt="Pothole" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuADFRQ8wGmt_U3FTBRloPC0Fe0qSIJbBG3ISgFyY7rBqLOn5ZTHI5pl_uBJAfKk7L0RWsJvzrcIU4AV-zGdSwOChfTXpXAhLj8GuYS-rP8lqM8VH7MIJ2wyX-dT86rZTlPiF86hSAELQ4R5ojIBuz7okayp-EeA7Y1jFq3sDNdl46caJBrGlFJqJz7XRd407k8rDtLC3q1acqjZcU77PEMzypZx25BJXfRIu7dmjJy5mIyRhUJSgLNuUwwYKGPBViA-tqdNVQCDiy0"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
+                            <div class="flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
+                                <span class="material-symbols-outlined text-primary-container text-[14px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                                <span id="sheetConfidence" class="text-[11px] text-white font-bold tracking-wide">98.4% Confidence Score</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <a href="detail-laporan.html" class="flex-1 bg-gradient-to-br from-[#00ff87] to-[#00cc6a] text-[#0e1322] font-headline font-extrabold py-3 px-6 rounded-full flex items-center justify-center gap-2 active:scale-95 transition-all shadow-[0_5px_15px_rgba(0,255,135,0.2)]">
+                            <span class="material-symbols-outlined text-lg">info</span>
+                            Lihat Detail
+                        </a>
+                        <button data-action="share" class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center text-slate-300 border border-white/10 hover:bg-white/10 hover:text-white transition-colors active:scale-95">
+                            <span class="material-symbols-outlined">share</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- BottomNavBar -->
+    <nav class="fixed bottom-0 left-0 w-full flex justify-around items-end px-2 pb-6 pt-3 bg-[#161b2b]/80 backdrop-blur-3xl rounded-t-[2.5rem] border-t border-white/5 shadow-[0_-10px_40px_rgba(0,0,0,0.5)] z-[1000]">
+        <a class="flex flex-col items-center justify-center text-slate-500 w-16 h-16 hover:text-white transition-colors duration-300 group" href="index.html" style="-webkit-tap-highlight-color: transparent;">
+            <span class="material-symbols-outlined transition-transform group-active:scale-90 text-[26px]">home</span>
+            <span class="font-headline text-[10px] font-bold uppercase tracking-widest mt-1.5 transition-colors group-hover:text-white">Beranda</span>
+        </a>
+        <a class="flex flex-col items-center justify-center bg-gradient-to-br from-[#00ff87] to-[#00cc6a] text-[#0e1322] rounded-full w-14 h-14 -translate-y-4 shadow-[0_10px_20px_rgba(0,255,135,0.3)] transition-all duration-300 relative group" href="peta.html" style="-webkit-tap-highlight-color: transparent;">
+            <span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">map</span>
+            <span class="absolute -bottom-6 font-headline text-[10px] font-extrabold uppercase tracking-widest text-[#00ff87] whitespace-nowrap drop-shadow-md">Peta</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-slate-500 w-16 h-16 hover:text-white transition-colors duration-300 group" href="detail-laporan.html" style="-webkit-tap-highlight-color: transparent;">
+            <span class="material-symbols-outlined transition-transform group-active:scale-90 text-[26px]">analytics</span>
+            <span class="font-headline text-[10px] font-bold uppercase tracking-widest mt-1.5 transition-colors group-hover:text-white">Laporan</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-slate-500 w-16 h-16 hover:text-white transition-colors duration-300 group" href="profil.html" style="-webkit-tap-highlight-color: transparent;">
+            <span class="material-symbols-outlined transition-transform group-active:scale-90 text-[26px]">person</span>
+            <span class="font-headline text-[10px] font-bold uppercase tracking-widest mt-1.5 transition-colors group-hover:text-white">Profil</span>
+        </a>
+    </nav>
+
+    <!-- NOTIFICATION MODAL -->
+    <div id="notificationModal" class="modal-overlay hidden">
+        <div class="modal-content w-[calc(100%-2rem)] max-w-md bg-[#1a1f33] rounded-3xl border border-white/10 shadow-2xl overflow-hidden">
+            <div class="flex justify-between items-center px-6 pt-6 pb-4 border-b border-white/5">
+                <h3 class="font-headline font-bold text-lg text-white flex items-center gap-2"><span class="material-symbols-outlined text-[#00ff87]">notifications</span> Notifikasi</h3>
+                <button data-action="close-modal" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-colors"><span class="material-symbols-outlined text-[18px]">close</span></button>
+            </div>
+            <div class="p-6 space-y-4 max-h-[60vh] overflow-y-auto hide-scrollbar">
+                <div class="flex gap-4 p-4 rounded-2xl bg-white/5 border border-primary-container/20">
+                    <div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-primary-container text-[18px]">verified</span></div>
+                    <div><p class="text-white text-sm font-semibold">Laporan Terverifikasi</p><p class="text-slate-400 text-xs mt-1">Laporan jalan rusak di Jl. Pahlawan telah diverifikasi.</p><span class="text-[10px] text-slate-500 mt-2 block">2 jam lalu</span></div>
+                </div>
+                <div class="flex gap-4 p-4 rounded-2xl bg-white/5">
+                    <div class="w-10 h-10 rounded-full bg-secondary-container/20 flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-secondary-container text-[18px]">auto_awesome</span></div>
+                    <div><p class="text-white text-sm font-semibold">3 Titik Baru Terdeteksi AI</p><p class="text-slate-400 text-xs mt-1">Sistem menemukan 3 titik kerusakan baru di Gombong.</p><span class="text-[10px] text-slate-500 mt-2 block">5 jam lalu</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/app.js"></script>
+    <script>
+        // ─── LEAFLET MAP INITIALIZATION ───
+        const map = L.map('map', {
+            center: [-7.6782, 109.6583], // Kebumen, Jawa Tengah
+            zoom: 14,
+            zoomControl: false,
+            attributionControl: false
+        });
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19
+        }).addTo(map);
+
+        // ─── CUSTOM MARKER ICONS ───
+        function createIcon(color, size) {
+            return L.divIcon({
+                className: '',
+                iconSize: [size, size],
+                iconAnchor: [size/2, size/2],
+                html: `
+                    <div style="position:relative;width:${size}px;height:${size}px;">
+                        <div class="pulse-ring" style="position:absolute;inset:0;border-radius:50%;background:${color};opacity:0.3;"></div>
+                        <div style="position:absolute;inset:4px;border-radius:50%;background:${color};border:3px solid #0e1322;box-shadow:0 0 15px ${color};display:flex;align-items:center;justify-content:center;">
+                            <span class="material-symbols-outlined" style="font-size:${size * 0.4}px;color:white;font-variation-settings:'FILL' 1;">warning</span>
+                        </div>
+                    </div>
+                `
+            });
+        }
+
+        function createYellowIcon(size) {
+            return L.divIcon({
+                className: '',
+                iconSize: [size, size],
+                iconAnchor: [size/2, size/2],
+                html: `
+                    <div style="position:relative;width:${size}px;height:${size}px;">
+                        <div class="pulse-ring" style="position:absolute;inset:0;border-radius:50%;background:#00e3fd;opacity:0.2;"></div>
+                        <div style="position:absolute;inset:4px;border-radius:50%;background:#00e3fd;border:2px solid #0e1322;box-shadow:0 0 10px rgba(0,227,253,0.4);display:flex;align-items:center;justify-content:center;">
+                            <span class="material-symbols-outlined" style="font-size:${size * 0.4}px;color:#0e1322;font-variation-settings:'FILL' 1;">report</span>
+                        </div>
+                    </div>
+                `
+            });
+        }
+
+        // ─── DATA: DAMAGE REPORTS ───
+        const reports = [
+            {
+                lat: -7.6698, lng: 109.6521, level: 'Parah', color: '#ffb4ab',
+                title: 'Jl. Pemuda, Kebumen', time: '2 jam lalu', confidence: '98.4%',
+                image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuADFRQ8wGmt_U3FTBRloPC0Fe0qSIJbBG3ISgFyY7rBqLOn5ZTHI5pl_uBJAfKk7L0RWsJvzrcIU4AV-zGdSwOChfTXpXAhLj8GuYS-rP8lqM8VH7MIJ2wyX-dT86rZTlPiF86hSAELQ4R5ojIBuz7okayp-EeA7Y1jFq3sDNdl46caJBrGlFJqJz7XRd407k8rDtLC3q1acqjZcU77PEMzypZx25BJXfRIu7dmjJy5mIyRhUJSgLNuUwwYKGPBViA-tqdNVQCDiy0'
+            },
+            {
+                lat: -7.6745, lng: 109.6620, level: 'Parah', color: '#ffb4ab',
+                title: 'Jl. Pahlawan, Kebumen', time: '5 jam lalu', confidence: '89.1%',
+                image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCX3sTeWulyCIeOwXb8l3fN8nUrfpB817ZXNL9OG8_LKdcHNgZV8r65SgmR4S1eBzFjK64BVk98NfttMGa-0KglChP-5slK7xvePnILDz-uQR6-7APrmNVQmu7BCZlzjDfr1eH5kwFxyFRGaaOqO3hv9iZ0TJTXx-5J-UmgW6f_C052SzoJqpoXyP2Uc9h49gJrpkKMt3n18y9GZj_rd_454VkmeE0qMWN-cU-v-NvgBKqiZWibRLYeMiKGTb2wiXGcpPmSkjAZur4'
+            }
+        ];
+
+        const yellowReports = [
+            { lat: -7.6820, lng: 109.6500, title: 'Jl. Kusuma, Kebumen' },
+            { lat: -7.6710, lng: 109.6700, title: 'Jl. Tentara Pelajar' },
+            { lat: -7.6850, lng: 109.6450, title: 'Jl. Soekarno-Hatta' }
+        ];
+
+        // ─── PLACE RED MARKERS ───
+        reports.forEach(r => {
+            const marker = L.marker([r.lat, r.lng], { icon: createIcon(r.color, 44) }).addTo(map);
+            marker.on('click', () => {
+                document.getElementById('sheetTitle').textContent = r.title;
+                document.getElementById('sheetTime').innerHTML = `<span class="material-symbols-outlined text-[14px]">schedule</span> AI Dideteksi ${r.time}`;
+                document.getElementById('sheetConfidence').textContent = `${r.confidence} Confidence Score`;
+                document.getElementById('sheetImage').src = r.image;
+                document.getElementById('sheetBadge').textContent = `Level: ${r.level}`;
+                toggleBottomSheet('bottomSheet', true);
+                map.flyTo([r.lat, r.lng], 16, { duration: 0.8 });
+            });
+        });
+
+        // ─── PLACE YELLOW MARKERS ───
+        yellowReports.forEach(r => {
+            const marker = L.marker([r.lat, r.lng], { icon: createYellowIcon(32) }).addTo(map);
+            marker.on('click', () => {
+                showToast(`Kerusakan sedang — ${r.title}`, 'report');
+            });
+        });
+
+        // ─── ZOOM CONTROLS ───
+        document.getElementById('btnZoomIn').addEventListener('click', () => { map.zoomIn(); });
+        document.getElementById('btnZoomOut').addEventListener('click', () => { map.zoomOut(); });
+
+        // ─── MY LOCATION ───
+        document.getElementById('btnMyLocation').addEventListener('click', () => {
+            const btn = document.getElementById('btnMyLocation');
+            btn.classList.add('animate-pulse');
+            showToast('Mendeteksi lokasi Anda...', 'my_location');
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((pos) => {
+                    const { latitude, longitude } = pos.coords;
+                    map.flyTo([latitude, longitude], 16, { duration: 1.2 });
+                    btn.classList.remove('animate-pulse');
+                    showToast('Lokasi ditemukan!', 'pin_drop');
+
+                    // Add user location marker
+                    L.circleMarker([latitude, longitude], {
+                        radius: 8, color: '#00ff87', fillColor: '#00ff87',
+                        fillOpacity: 1, weight: 3, opacity: 0.8
+                    }).addTo(map);
+                }, () => {
+                    // Fallback to Kebumen center
+                    map.flyTo([-7.6782, 109.6583], 15, { duration: 1 });
+                    btn.classList.remove('animate-pulse');
+                    showToast('Menggunakan lokasi default: Kebumen', 'pin_drop');
+                });
+            } else {
+                map.flyTo([-7.6782, 109.6583], 15, { duration: 1 });
+                btn.classList.remove('animate-pulse');
+                showToast('Geolokasi tidak didukung', 'error');
+            }
+        });
+    </script>
+</body>
+</html>

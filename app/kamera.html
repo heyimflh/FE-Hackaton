@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html class="dark" lang="id">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>SmartRoad Kamera - Mode Deteksi AI</title>
+    
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="assets/tailwind.config.js"></script>
+    <link href="assets/style.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+</head>
+<body class="bg-black font-body text-white overflow-hidden w-screen h-[100dvh]">
+    
+    <!-- TopAppBar for Camera -->
+    <header class="fixed top-0 w-full z-50 bg-gradient-to-b from-black/80 to-transparent pt-6 pb-12 px-6 flex justify-between items-center pointer-events-none">
+        <button data-action="back" class="pointer-events-auto h-12 w-12 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center border border-white/20 hover:bg-white/20 active:scale-95 transition-all text-white">
+            <span class="material-symbols-outlined text-[28px]">arrow_back</span>
+        </button>
+        
+        <div class="pointer-events-auto bg-black/40 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10 flex items-center gap-2">
+            <div class="w-2 h-2 bg-error rounded-full animate-pulse shadow-[0_0_8px_red]"></div>
+            <span class="text-xs font-headline font-bold uppercase tracking-widest">Live Auto-Detect</span>
+        </div>
+        
+        <button data-action="flash-toggle" class="pointer-events-auto h-12 w-12 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center border border-white/20 text-white hover:bg-white/20 active:scale-95 transition-all">
+            <span class="material-symbols-outlined text-[24px]">flash_on</span>
+        </button>
+    </header>
+
+    <!-- Main Viewfinder -->
+    <main class="relative w-full h-full">
+        <img alt="Cracked road view" class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-Kg226YNbe1EJdG5sxaOv-4Tl8Vct5AdIB6OCofWx-bLX-afEjJAAsALi8oSXqMN-HkRqqOZqSdKCSxVJSm6WeV_JdUZ8mbNtIqFAHjLxksctoxq1T1zOwR39t-jdnUvAVlPvdCx_1saY2IQC4bD1miWUtVmqoT0MEJm8igC4G70-qGxdgocwqlqQ_IL8RVfp0NrDtakdpzzm7hKL_TFI-3605_P4PsKTTA58sn7HZw0o2jLBUGV-FHYZDXKx6quBV4WNEzrfE_Y"/>
+        <div class="absolute inset-0 bg-black/20 pointer-events-none"></div>
+
+        <!-- AI Crosshairs & Bounding Box -->
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div class="absolute w-[80vw] h-[50vh] border border-white/20 rounded-3xl opacity-50">
+                <div class="absolute -top-1 -left-1 w-8 h-8 border-t-2 border-l-2 border-white rounded-tl-3xl"></div>
+                <div class="absolute -top-1 -right-1 w-8 h-8 border-t-2 border-r-2 border-white rounded-tr-3xl"></div>
+                <div class="absolute -bottom-1 -left-1 w-8 h-8 border-b-2 border-l-2 border-white rounded-bl-3xl"></div>
+                <div class="absolute -bottom-1 -right-1 w-8 h-8 border-b-2 border-r-2 border-white rounded-br-3xl"></div>
+            </div>
+            <div class="relative w-64 h-64 border-2 border-[#00ff87] rounded-lg shadow-[0_0_20px_rgba(0,255,135,0.7)] bg-[#00ff87]/5 backdrop-blur-[1px] animate-[pulse_2s_ease-in-out_infinite]">
+                <div class="absolute -top-[3px] -left-[3px] w-5 h-5 border-t-4 border-l-4 border-[#00ff87]"></div>
+                <div class="absolute -top-[3px] -right-[3px] w-5 h-5 border-t-4 border-r-4 border-[#00ff87]"></div>
+                <div class="absolute -bottom-[3px] -left-[3px] w-5 h-5 border-b-4 border-l-4 border-[#00ff87]"></div>
+                <div class="absolute -bottom-[3px] -right-[3px] w-5 h-5 border-b-4 border-r-4 border-[#00ff87]"></div>
+                <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-[#0e1322]/80 backdrop-blur-md px-3 py-1.5 rounded-md border border-[#00ff87]/50 flex items-center gap-1.5 shadow-xl whitespace-nowrap">
+                    <span class="material-symbols-outlined text-[14px] text-[#00ff87]">warning</span>
+                    <span class="text-white font-headline font-bold text-[10px] tracking-widest uppercase">Pothole_042</span>
+                    <span class="text-[#00ff87] font-mono text-[10px] ml-1">92%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#00ff87] to-transparent shadow-[0_0_15px_#00ff87] z-20 pointer-events-none animate-[scan_3s_linear_infinite]"></div>
+    </main>
+
+    <!-- Bottom Controls Area -->
+    <div class="fixed bottom-0 left-0 w-full z-40 bg-gradient-to-t from-black via-black/80 to-transparent pb-10 pt-20 px-6">
+        <div class="flex justify-center mb-8">
+            <div class="bg-error/20 backdrop-blur-xl px-5 py-2.5 rounded-full border border-error/50 flex items-center gap-2 shadow-[0_0_20px_rgba(255,0,0,0.3)] animate-bounce">
+                <span class="material-symbols-outlined text-error text-[18px]" style="font-variation-settings: 'FILL' 1;">error</span>
+                <span class="text-white font-headline font-bold tracking-tight text-sm">Kerusakan Jalan Terdeteksi!</span>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between">
+            <button data-action="open-gallery" class="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 active:scale-90 transition-all text-white overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?w=100&q=80" alt="Gallery" class="w-full h-full object-cover mix-blend-luminosity opacity-80" />
+            </button>
+
+            <a href="detail-laporan.html" class="relative group cursor-pointer" style="-webkit-tap-highlight-color: transparent;">
+                <div class="absolute inset-0 bg-[#00ff87] blur-xl rounded-full opacity-40 group-hover:opacity-70 transition-opacity"></div>
+                <div class="w-[84px] h-[84px] rounded-full border-[4px] border-white flex items-center justify-center bg-black/20 backdrop-blur-sm relative transition-transform group-hover:scale-95 group-active:scale-90">
+                    <div class="w-[68px] h-[68px] rounded-full bg-gradient-to-br from-[#00ff87] to-[#00cc6a] flex items-center justify-center shadow-inner">
+                        <span class="material-symbols-outlined text-[#0e1322] text-[32px]">send</span>
+                    </div>
+                </div>
+            </a>
+
+            <button data-action="switch-camera" class="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 text-white hover:bg-white/20 active:scale-90 transition-all">
+                <span class="material-symbols-outlined">flip_camera_ios</span>
+            </button>
+        </div>
+        
+        <p class="text-center text-slate-400 text-xs font-body mt-8 tracking-wide">
+            Tekan tombol untuk mengirim laporan kerusakan rute Kebumen
+        </p>
+    </div>
+    
+    <script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html class="dark" lang="id">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Detail Laporan - SmartRoad AI</title>
+    
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="assets/tailwind.config.js"></script>
+    <link href="assets/style.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+</head>
+<body class="bg-background text-on-background font-body min-h-screen">
+    <!-- Header -->
+    <header class="fixed top-0 w-full z-50 bg-[#0e1322]/80 backdrop-blur-3xl shadow-[0_4px_30px_rgba(0,0,0,0.5)] flex justify-between items-center px-6 py-4 border-b border-white/5">
+        <div class="flex items-center gap-4">
+            <button data-action="back" class="flex items-center justify-center p-2 rounded-full bg-white/5 hover:bg-primary-container hover:text-[#0e1322] text-[#00ff87] transition-all active:scale-90 border border-white/5">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </button>
+            <h1 class="text-lg md:text-xl font-bold tracking-tighter text-white font-headline drop-shadow-md">Detail Laporan</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <button data-action="notifications" class="relative flex items-center justify-center text-slate-300 hover:text-[#00ff87] transition-colors">
+                <span class="material-symbols-outlined text-[26px]">notifications</span>
+            </button>
+            <div data-action="go-profile" class="w-10 h-10 rounded-full border-2 border-primary-container/30 flex items-center justify-center bg-surface-container-highest cursor-pointer hover:border-primary-container transition-colors shadow-lg">
+                <span class="material-symbols-outlined text-2xl text-slate-300">account_circle</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-24 pb-32">
+        <!-- Hero AI Vision Section -->
+        <div class="relative w-full h-[353px] px-4">
+            <div class="relative w-full h-full rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.8)] border border-white/5">
+                <img alt="Pothole detection" class="w-full h-full object-cover grayscale-[20%] brightness-[0.6]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMvi8f2iyNJSS6-6wmILI-_E86fibBsn_0PNA5Qtin-E08z3MA28eOtlJPQ4gx-Njs1sYJH-7IrufK0EyCNpnaKi5XM54En0CLtiaaycdcYxUQXfj_7-X3Pm3NxRr11W4mei4NEATVZNOx5BsNFg4YbAk4F5TG5os7JKtGyOc_rYRl9PDY1Avyzu3g38cRM18IIzv1JgO_OH46OlAWivauRxFJ_1RqUXqhjYzpPTND0E0ZXmBaSmBUlugjQ6_UVYk5QzsUS5sIet4"/>
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div class="w-64 h-48 ai-glow-border rounded-xl relative bg-primary-container/5 backdrop-blur-[2px]">
+                        <div class="absolute -top-10 left-0 bg-primary-container/90 backdrop-blur-md text-[#0e1322] px-4 py-1.5 rounded-lg text-[10px] font-headline font-extrabold tracking-widest uppercase flex items-center gap-2 shadow-[0_5px_15px_rgba(0,255,135,0.4)]">
+                            <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                            AI DETECTED: POTHOLE (89%)
+                        </div>
+                        <div class="absolute -bottom-8 right-0 text-primary-fixed text-[11px] font-mono opacity-90 drop-shadow-md">
+                            COORD: -7.6698, 109.6521
+                        </div>
+                    </div>
+                </div>
+                <div class="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
+            </div>
+        </div>
+
+        <!-- Details Glass Container -->
+        <section class="mt-[-3rem] relative z-10 px-4">
+            <div class="bg-surface-container-high/80 backdrop-blur-3xl rounded-3xl p-6 md:p-8 border border-white/5 shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
+                
+                <div class="flex justify-between items-start mb-8">
+                    <div>
+                        <h2 class="text-slate-400 text-xs font-headline font-extrabold tracking-widest uppercase mb-1">ID Laporan</h2>
+                        <div class="text-2xl md:text-3xl font-headline font-black tracking-tight text-white drop-shadow-sm">#SR-992-QX</div>
+                    </div>
+                    <div class="bg-primary-container/10 border border-primary-container/30 px-5 py-2.5 rounded-full shadow-inner">
+                        <span class="text-primary-container font-headline font-extrabold text-[10px] uppercase tracking-widest">Terverifikasi</span>
+                    </div>
+                </div>
+
+                <!-- Progress Tracker -->
+                <div class="mb-10 bg-surface-container-lowest/50 p-6 rounded-2xl border border-white/5">
+                    <div class="flex justify-between relative">
+                        <div class="absolute top-5 left-8 right-8 h-[2px] bg-slate-700/50"></div>
+                        <div class="absolute top-5 left-8 w-1/2 h-[2px] bg-gradient-to-r from-primary-container to-secondary-container shadow-[0_0_10px_#00ff87]"></div>
+                        <div class="relative z-10 flex flex-col items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-primary-container text-[#0e1322] flex items-center justify-center shadow-[0_0_15px_rgba(0,255,135,0.4)]">
+                                <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">send</span>
+                            </div>
+                            <span class="text-[10px] font-headline font-extrabold text-primary-container uppercase tracking-widest">Dikirim</span>
+                        </div>
+                        <div class="relative z-10 flex flex-col items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-container to-secondary-container text-[#0e1322] flex items-center justify-center shadow-[0_0_20px_rgba(0,227,253,0.3)]">
+                                <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+                            </div>
+                            <span class="text-[10px] font-headline font-extrabold text-white uppercase tracking-widest drop-shadow-md">Terverifikasi</span>
+                        </div>
+                        <div class="relative z-10 flex flex-col items-center gap-3 opacity-50">
+                            <div class="w-10 h-10 rounded-full bg-surface-container-highest text-slate-400 flex items-center justify-center border border-white/10">
+                                <span class="material-symbols-outlined text-[18px]">task_alt</span>
+                            </div>
+                            <span class="text-[10px] font-headline font-bold text-slate-400 uppercase tracking-widest">Selesai</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bento Grid Info -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="col-span-2 bg-surface-container-lowest/80 rounded-2xl p-5 border border-white/5 hover:border-white/10 transition-colors">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="p-3 bg-secondary-container/10 rounded-full"><span class="material-symbols-outlined text-secondary-container">location_on</span></div>
+                            <div>
+                                <div class="text-xs text-slate-400 font-headline font-bold uppercase tracking-widest mb-0.5">Lokasi</div>
+                                <div class="text-base font-bold text-white">Jl. Pahlawan, Kebumen</div>
+                            </div>
+                        </div>
+                        <div class="w-full h-36 rounded-xl overflow-hidden relative border border-white/5">
+                            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/40 z-10 pointer-events-none"></div>
+                            <img alt="Mini Map" class="w-full h-full object-cover grayscale brightness-75 mix-blend-screen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAL2f6SLI503JehJa4ilPTvpRRiVcU654730mu5WZBXpwQmWRjQXexOn_M2_oRfgdoCct5ixrMvsr29KW5_drE6-b18Kdv75meXBRFhb_-MhaiWG1TFseaq9RA6jjXcycGAa_8us--fsOPPpFcmz1IUxHkiBi62iDAuQxo-eo4Q0KzRnl_FmSJPwUzD_Prx8WP1_u_r8hDLfGpxTSi0RoOj54hFyQcB7YgJBReBv_9OguSkwbfxwhMJhkMl-D2dVkZo510FgqiBDjs"/>
+                            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-error/20 flex items-center justify-center">
+                                <div class="w-3 h-3 bg-error rounded-full shadow-[0_0_10px_#ffb4ab] animate-pulse"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-surface-container-lowest/80 rounded-2xl p-5 border border-white/5 hover:border-white/10 transition-colors">
+                        <div class="text-[10px] text-slate-400 font-headline font-bold uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
+                            <span class="material-symbols-outlined text-[14px]">my_location</span> Titik GPS
+                        </div>
+                        <div class="text-sm font-mono font-bold text-secondary-fixed break-words">-7.6698, 109.6521</div>
+                    </div>
+                    <div class="bg-surface-container-lowest/80 rounded-2xl p-5 border border-white/5 hover:border-white/10 transition-colors">
+                        <div class="text-[10px] text-slate-400 font-headline font-bold uppercase tracking-widest mb-1.5 flex items-center gap-1.5">
+                            <span class="material-symbols-outlined text-[14px]">calendar_month</span> Waktu
+                        </div>
+                        <div class="text-sm font-bold text-white">24 Okt 2023<br/><span class="text-slate-400 font-medium">14:20 WIB</span></div>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="mt-4 p-5 bg-surface-container-lowest/80 rounded-2xl border border-white/5 relative overflow-hidden">
+                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary-container to-secondary-container"></div>
+                    <div class="text-[10px] text-slate-400 font-headline font-bold uppercase tracking-widest mb-2 flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-[14px]">notes</span> Deskripsi Pelapor
+                    </div>
+                    <p class="text-sm leading-relaxed text-on-surface-variant font-medium">
+                        "Lubang cukup dalam di tengah jalan, sangat membahayakan pengendara motor terutama saat hujan tergenang air."
+                    </p>
+                </div>
+
+                <!-- Action Button -->
+                <button data-action="share" class="w-full mt-8 bg-surface-container-lowest text-white border border-white/10 font-headline font-bold py-4 rounded-full flex items-center justify-center gap-3 hover:bg-white/5 hover:border-white/20 active:scale-95 transition-all shadow-lg">
+                    <span class="material-symbols-outlined">share</span>
+                    Bagikan Pembaruan
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- BottomNavBar -->
+    <nav class="fixed bottom-0 left-0 w-full flex justify-around items-end px-2 pb-6 pt-3 bg-[#161b2b]/80 backdrop-blur-3xl rounded-t-[2.5rem] border-t border-white/5 shadow-[0_-10px_40px_rgba(0,0,0,0.5)] z-50">
+        <a class="flex flex-col items-center justify-center text-slate-500 w-16 h-16 hover:text-white transition-colors duration-300 group" href="index.html" style="-webkit-tap-highlight-color: transparent;">
+            <span class="material-symbols-outlined transition-transform group-active:scale-90 text-[26px]">home</span>
+            <span class="font-headline text-[10px] font-bold uppercase tracking-widest mt-1.5 transition-colors group-hover:text-white">Beranda</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-slate-500 w-16 h-16 hover:text-white transition-colors duration-300 group" href="peta.html" style="-webkit-tap-highlight-color: transparent;">
+            <span class="material-symbols-outlined transition-transform group-active:scale-90 text-[26px]">map</span>
+            <span class="font-headline text-[10px] font-bold uppercase tracking-widest mt-1.5 transition-colors group-hover:text-white">Peta</span>
+        </a>
+        <a class="flex flex-col items-center justify-center bg-gradient-to-br from-[#00ff87] to-[#00cc6a] text-[#0e1322] rounded-full w-14 h-14 -translate-y-4 shadow-[0_10px_20px_rgba(0,255,135,0.3)] transition-all duration-300 relative group" href="detail-laporan.html" style="-webkit-tap-highlight-color: transparent;">
+            <span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">analytics</span>
+            <span class="absolute -bottom-6 font-headline text-[10px] font-extrabold uppercase tracking-widest text-[#00ff87] whitespace-nowrap drop-shadow-md">Laporan</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-slate-500 w-16 h-16 hover:text-white transition-colors duration-300 group" href="profil.html" style="-webkit-tap-highlight-color: transparent;">
+            <span class="material-symbols-outlined transition-transform group-active:scale-90 text-[26px]">person</span>
+            <span class="font-headline text-[10px] font-bold uppercase tracking-widest mt-1.5 transition-colors group-hover:text-white">Profil</span>
+        </a>
+    </nav>
+
+    <!-- NOTIFICATION MODAL -->
+    <div id="notificationModal" class="modal-overlay hidden">
+        <div class="modal-content w-[calc(100%-2rem)] max-w-md bg-[#1a1f33] rounded-3xl border border-white/10 shadow-2xl overflow-hidden">
+            <div class="flex justify-between items-center px-6 pt-6 pb-4 border-b border-white/5">
+                <h3 class="font-headline font-bold text-lg text-white flex items-center gap-2"><span class="material-symbols-outlined text-[#00ff87]">notifications</span> Notifikasi</h3>
+                <button data-action="close-modal" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-colors"><span class="material-symbols-outlined text-[18px]">close</span></button>
+            </div>
+            <div class="p-6 space-y-4 max-h-[60vh] overflow-y-auto hide-scrollbar">
+                <div class="flex gap-4 p-4 rounded-2xl bg-white/5 border border-primary-container/20">
+                    <div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-primary-container text-[18px]">verified</span></div>
+                    <div><p class="text-white text-sm font-semibold">Laporan Terverifikasi</p><p class="text-slate-400 text-xs mt-1">Laporan Anda di Jl. Pahlawan telah diverifikasi oleh AI.</p><span class="text-[10px] text-slate-500 mt-2 block">2 jam lalu</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/app.js"></script>
+</body>
+</html>

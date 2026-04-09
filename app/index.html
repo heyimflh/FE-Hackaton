@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html class="dark" lang="id">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Beranda - SmartRoad AI</title>
+    
+    <!-- Scripts & Styles -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="assets/tailwind.config.js"></script>
+    <link href="assets/style.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+</head>
+<body class="text-on-background min-h-screen pb-32">
+    <!-- TopAppBar -->
+    <header class="fixed top-0 w-full z-50 bg-[#0e1322]/60 backdrop-blur-3xl shadow-[0_4px_30px_rgba(0,0,0,0.5)] flex justify-between items-center px-6 py-4 w-full border-b border-white/5">
+        <div class="flex items-center gap-3">
+            <div data-action="go-profile" class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-container/30 shadow-lg cursor-pointer hover:border-primary-container transition-colors">
+                <div class="w-full h-full bg-slate-700 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-white text-3xl">account_circle</span>
+                </div>
+            </div>
+            <div class="flex flex-col">
+                <span class="text-slate-400 font-label text-[10px] uppercase tracking-widest">Selamat Datang</span>
+                <span class="font-headline font-bold tracking-tight text-white leading-tight">Hi, Andi</span>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <span class="text-lg md:text-xl font-bold tracking-tighter text-white font-headline border-r border-white/10 pr-4">SmartRoad AI</span>
+            <button data-action="notifications" class="relative w-10 h-10 rounded-full bg-surface-container-high text-[#00ff87] flex items-center justify-center hover:bg-[#00ff87]/10 hover:scale-105 transition-transform active:scale-95 duration-200">
+                <span class="material-symbols-outlined">notifications</span>
+                <div class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full animate-pulse"></div>
+            </button>
+        </div>
+    </header>
+
+    <main class="pt-24 px-6 max-w-5xl mx-auto space-y-10">
+        <!-- Hero Section -->
+        <section class="relative py-12 px-4 md:py-16 md:px-8 overflow-hidden rounded-3xl">
+            <div class="absolute -top-20 -left-20 w-80 h-80 bg-primary-container/20 blur-[120px] rounded-full pointer-events-none"></div>
+            <div class="relative z-10 space-y-6 md:space-y-8">
+                <h1 class="font-headline text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tighter leading-snug drop-shadow-md">
+                    Infrastruktur Jalan <br/>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-container to-secondary-container">Lebih Pintar.</span>
+                </h1>
+                <p class="text-slate-300 max-w-md font-body leading-relaxed md:leading-loose text-[13px] md:text-base pr-4">
+                    Bantu kami memantau dan memetakan kondisi jalan di Kabupaten Kebumen menggunakan AI untuk perbaikan yang efisien.
+                </p>
+                <a href="kamera.html" class="inline-flex group relative overflow-hidden w-full md:w-auto px-8 py-4 bg-gradient-to-br from-[#00ff87] to-[#00cc6a] rounded-full text-[#0e1322] font-headline font-extrabold text-lg items-center justify-center gap-3 shadow-[0_10px_30px_rgba(0,255,135,0.4)] hover:scale-[1.03] transition-all duration-300 active:scale-95 border border-white/20">
+                    <span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">photo_camera</span>
+                    Laporkan Jalan Rusak
+                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out pointer-events-none"></div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Stats Grid (Bento Pattern) -->
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="glass-card p-5 rounded-2xl space-y-2 border border-white/5 hover:border-primary-container/30 transition-colors cursor-default hover:-translate-y-1 duration-300">
+                <span class="text-primary-container material-symbols-outlined drop-shadow-[0_0_8px_rgba(0,255,135,0.4)]">analytics</span>
+                <div class="text-2xl md:text-3xl font-headline font-extrabold text-white">128</div>
+                <div class="text-slate-400 font-label text-[10px] uppercase tracking-widest">Total Laporan</div>
+            </div>
+            <div class="glass-card p-5 rounded-2xl space-y-2 border border-white/5 hover:border-secondary-container/30 transition-colors cursor-default hover:-translate-y-1 duration-300">
+                <span class="text-secondary-container material-symbols-outlined drop-shadow-[0_0_8px_rgba(0,227,253,0.4)]">verified</span>
+                <div class="text-2xl md:text-3xl font-headline font-extrabold text-white">84</div>
+                <div class="text-slate-400 font-label text-[10px] uppercase tracking-widest">Terverifikasi</div>
+            </div>
+            <div class="glass-card p-5 rounded-2xl space-y-2 border border-white/5 hover:border-primary-container/30 transition-colors cursor-default hover:-translate-y-1 duration-300">
+                <span class="text-[#00ff87] material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">task_alt</span>
+                <div class="text-2xl md:text-3xl font-headline font-extrabold text-white">32</div>
+                <div class="text-slate-400 font-label text-[10px] uppercase tracking-widest">Selesai</div>
+            </div>
+            <div class="glass-card p-5 rounded-2xl space-y-2 border border-white/5 hover:border-error/30 transition-colors cursor-default hover:-translate-y-1 duration-300">
+                <span class="text-error material-symbols-outlined drop-shadow-[0_0_8px_rgba(255,180,171,0.4)]" style="font-variation-settings: 'FILL' 1;">warning</span>
+                <div class="text-2xl md:text-3xl font-headline font-extrabold text-white">12</div>
+                <div class="text-slate-400 font-label text-[10px] uppercase tracking-widest">Menunggu</div>
+            </div>
+        </section>
+
+        <!-- Laporan Saya Section -->
+        <section class="space-y-6" data-section="reports">
+            <div class="flex items-center justify-between">
+                <h2 class="font-headline text-2xl font-bold tracking-tight">Laporan Terkini</h2>
+                <button data-action="lihat-semua" class="text-primary-container font-label text-[10px] uppercase tracking-widest hover:text-white transition-colors bg-primary-container/10 px-4 py-2 rounded-full">Lihat Semua</button>
+            </div>
+            
+            <div class="space-y-4">
+                <!-- Card 1: Menunggu -->
+                <a href="detail-laporan.html" class="block glass-card p-4 rounded-xl border border-white/5 flex items-center gap-4 group hover:bg-surface-container-high transition-all cursor-pointer shadow-lg hover:shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+                    <div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 relative">
+                        <img alt="Jl. Pahlawan" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCX3sTeWulyCIeOwXb8l3fN8nUrfpB817ZXNL9OG8_LKdcHNgZV8r65SgmR4S1eBzFjK64BVk98NfttMGa-0KglChP-5slK7xvePnILDz-uQR6-7APrmNVQmu7BCZlzjDfr1eH5kwFxyFRGaaOqO3hv9iZ0TJTXx-5J-UmgW6f_C052SzoJqpoXyP2Uc9h49gJrpkKMt3n18y9GZj_rd_454VkmeE0qMWN-cU-v-NvgBKqiZWibRLYeMiKGTb2wiXGcpPmSkjAZur4"/>
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
+                    </div>
+                    <div class="flex-grow">
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="font-headline font-bold text-lg group-hover:text-primary-container transition-colors">Jl. Pahlawan</h3>
+                            <span class="px-3 py-1 rounded-full bg-surface-container-highest text-slate-300 text-[9px] font-headline font-bold uppercase tracking-widest">Menunggu</span>
+                        </div>
+                        <p class="text-slate-400 text-xs font-body mb-3">Kabupaten Kebumen • Lubang Besar</p>
+                        <div class="w-full bg-surface-container-lowest h-1.5 rounded-full overflow-hidden">
+                            <div class="bg-slate-500 h-full w-1/4"></div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Card 2: Terverifikasi -->
+                <a href="detail-laporan.html" class="block glass-card p-4 rounded-xl border border-white/5 flex items-center gap-4 group hover:bg-surface-container-high transition-all cursor-pointer shadow-lg hover:shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+                    <div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 relative">
+                        <img alt="Jl. Ahmad Yani" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDC3QrtmuwRxy9fZWefv_Dm-I51la0HF_0L75jni3hTijeoN6gXJ2ImnPM7dkmrmBhAl0ejwZOd2BLNq446jZRRT3QZ5bxlKB7jbAlV8EKjw0VD8ETWmMp-k4spotQYtBDSKmNzkno1gJYcjQ0066Aui8uiJNI-WXRxhZ4yM-ijzYHkemvvwEziCM-e5HwAQETkJEizZenazpEatajD6Ytm1u4eOBiVaN_UtC3MP_g26TBNJ29BhF-CqDRInwGoFEJlmRdFxRbYwm4"/>
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
+                    </div>
+                    <div class="flex-grow">
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="font-headline font-bold text-lg group-hover:text-primary-container transition-colors">Jl. Ahmad Yani</h3>
+                            <span class="px-3 py-1 rounded-full bg-secondary-container/20 text-secondary-container text-[9px] font-headline font-bold uppercase tracking-widest border border-secondary-container/20">Terverifikasi</span>
+                        </div>
+                        <p class="text-slate-400 text-xs font-body mb-3">Kabupaten Kebumen • Retakan Melintang</p>
+                        <div class="w-full bg-surface-container-lowest h-1.5 rounded-full overflow-hidden">
+                            <div class="bg-secondary-container h-full w-2/3 shadow-[0_0_10px_rgba(0,227,253,0.5)] rounded-full"></div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Map Quick Access -->
+        <section class="glass-card p-8 rounded-2xl overflow-hidden relative border border-white/5 shadow-2xl">
+            <div class="absolute inset-0 z-0 opacity-40">
+                <img alt="Map Preview" class="w-full h-full object-cover mix-blend-screen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBefHSBv-rB-qassI5QYgNGkLpbg8uCqZAVxwW2vSpEG2RSYQSNePbkv3oKdNT9J57cHSBaZZdnIgSAWGhr_xGBI3wyVKejO7TpPFA1CnLpthmoqsjp_2ja9F-iyXnlXK5JKmmvouxdldEHjfKscOf2l0hkOzLsujFaqhdqn1dbZfxpicw5ZMRDAHT8MQRc6-dpnpAtvDvJQe2vl5FTSEZv1ekeRPsLUAnrKcqfRaeX9Xe7BKACa_JC-cdyyep2RfFmuFhdv5xpNsE"/>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-r from-surface/90 to-transparent z-10 pointer-events-none"></div>
+            
+            <div class="relative z-20 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div class="max-w-[70%]">
+                    <h2 class="font-headline text-xl md:text-2xl font-bold tracking-tight mb-2 drop-shadow-md">Peta Interaktif</h2>
+                    <p class="text-slate-300 font-body text-[13px] md:text-sm leading-relaxed">Pantau titik kerusakan jalan secara real-time di seluruh area Kabupaten Kebumen.</p>
+                </div>
+                <a href="peta.html" class="inline-flex bg-surface-container-highest/90 backdrop-blur-xl px-6 py-3.5 rounded-full border border-white/10 font-headline font-extrabold items-center justify-center gap-2 hover:bg-primary-container hover:text-[#0e1322] hover:border-primary-container transition-all active:scale-95 text-white whitespace-nowrap shadow-xl">
+                    Jelajahi Peta
+                    <span class="material-symbols-outlined text-lg opacity-80">open_in_new</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Standardized BottomNavBar -->
+    <nav class="fixed bottom-0 left-0 w-full flex justify-around items-end px-2 pb-6 pt-3 bg-[#161b2b]/80 backdrop-blur-3xl rounded-t-[2.5rem] border-t border-white/5 shadow-[0_-10px_40px_rgba(0,0,0,0.5)] z-50">
+        <a class="flex flex-col items-center justify-center bg-gradient-to-br from-[#00ff87] to-[#00cc6a] text-[#0e1322] rounded-full w-14 h-14 -translate-y-4 shadow-[0_10px_20px_rgba(0,255,135,0.3)] transition-all duration-300 relative group" href="index.html" style="-webkit-tap-highlight-color: transparent;">
+            <span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">home</span>
+            <span class="absolute -bottom-6 font-headline text-[10px] font-extrabold uppercase tracking-widest text-[#00ff87] whitespace-nowrap drop-shadow-md">Beranda</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-slate-500 w-16 h-16 hover:text-white transition-colors duration-300 group" href="peta.html" style="-webkit-tap-highlight-color: transparent;">
+            <span class="material-symbols-outlined transition-transform group-active:scale-90 text-[26px]">map</span>
+            <span class="font-headline text-[10px] font-bold uppercase tracking-widest mt-1.5 transition-colors group-hover:text-white">Peta</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-slate-500 w-16 h-16 hover:text-white transition-colors duration-300 group" href="detail-laporan.html" style="-webkit-tap-highlight-color: transparent;">
+            <span class="material-symbols-outlined transition-transform group-active:scale-90 text-[26px]">analytics</span>
+            <span class="font-headline text-[10px] font-bold uppercase tracking-widest mt-1.5 transition-colors group-hover:text-white">Laporan</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-slate-500 w-16 h-16 hover:text-white transition-colors duration-300 group" href="profil.html" style="-webkit-tap-highlight-color: transparent;">
+            <span class="material-symbols-outlined transition-transform group-active:scale-90 text-[26px]">person</span>
+            <span class="font-headline text-[10px] font-bold uppercase tracking-widest mt-1.5 transition-colors group-hover:text-white">Profil</span>
+        </a>
+    </nav>
+
+    <!-- ═══ NOTIFICATION MODAL ═══ -->
+    <div id="notificationModal" class="modal-overlay hidden">
+        <div class="modal-content w-[calc(100%-2rem)] max-w-md bg-[#1a1f33] rounded-3xl border border-white/10 shadow-2xl overflow-hidden">
+            <div class="flex justify-between items-center px-6 pt-6 pb-4 border-b border-white/5">
+                <h3 class="font-headline font-bold text-lg text-white flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[#00ff87]">notifications</span> Notifikasi
+                </h3>
+                <button data-action="close-modal" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">close</span>
+                </button>
+            </div>
+            <div class="p-6 space-y-4 max-h-[60vh] overflow-y-auto hide-scrollbar">
+                <div class="flex gap-4 p-4 rounded-2xl bg-white/5 border border-primary-container/20 hover:bg-white/10 transition-colors cursor-pointer">
+                    <div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center flex-shrink-0">
+                        <span class="material-symbols-outlined text-primary-container text-[18px]">verified</span>
+                    </div>
+                    <div>
+                        <p class="text-white text-sm font-semibold">Laporan #SR-992-QX Terverifikasi</p>
+                        <p class="text-slate-400 text-xs mt-1">Laporan kerusakan di Jl. Pahlawan telah diverifikasi oleh AI.</p>
+                        <span class="text-[10px] text-slate-500 mt-2 block">2 jam lalu</span>
+                    </div>
+                </div>
+                <div class="flex gap-4 p-4 rounded-2xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer">
+                    <div class="w-10 h-10 rounded-full bg-secondary-container/20 flex items-center justify-center flex-shrink-0">
+                        <span class="material-symbols-outlined text-secondary-container text-[18px]">auto_awesome</span>
+                    </div>
+                    <div>
+                        <p class="text-white text-sm font-semibold">AI Mendeteksi 3 Titik Baru</p>
+                        <p class="text-slate-400 text-xs mt-1">Sistem AI menemukan 3 titik kerusakan baru di area Gombong.</p>
+                        <span class="text-[10px] text-slate-500 mt-2 block">5 jam lalu</span>
+                    </div>
+                </div>
+                <div class="flex gap-4 p-4 rounded-2xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer">
+                    <div class="w-10 h-10 rounded-full bg-error-container/20 flex items-center justify-center flex-shrink-0">
+                        <span class="material-symbols-outlined text-error text-[18px]">warning</span>
+                    </div>
+                    <div>
+                        <p class="text-white text-sm font-semibold">Peningkatan Kerusakan Area Kebumen</p>
+                        <p class="text-slate-400 text-xs mt-1">12 laporan baru dalam 24 jam terakhir menunjukkan peningkatan kerusakan.</p>
+                        <span class="text-[10px] text-slate-500 mt-2 block">1 hari lalu</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/app.js"></script>
+</body>
+</html>
