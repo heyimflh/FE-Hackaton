@@ -1,5 +1,5 @@
 /**
- * SmartRoad AI — Shared Application Logic
+ * ASPAL — Shared Application Logic
  * Handles all button interactions, modals, toasts, and UI states.
  */
 
@@ -38,8 +38,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll('[data-action="share"]').forEach(btn => {
         btn.addEventListener('click', () => {
             const shareData = {
-                title: 'SmartRoad AI — Laporan Kerusakan Jalan',
-                text: 'Lihat laporan kerusakan jalan yang terdeteksi oleh SmartRoad AI di Jl. Pahlawan, Kebumen.',
+                title: 'ASPAL — Laporan Kerusakan Jalan',
+                text: 'Lihat laporan kerusakan jalan yang terdeteksi oleh ASPAL di Jl. Pahlawan, Kebumen.',
                 url: window.location.href
             };
             if (navigator.share) {
